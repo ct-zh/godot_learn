@@ -30,5 +30,20 @@
 	- [PathFollow2D](https://docs.godotengine.org/zh-cn/4.x/classes/class_pathfollow2d.html#class-pathfollow2d) ： path2D的取样器
 
 ## 常见节点组合
+
 - 带碰撞的角色 Area2D, 子节点AnimatedSprite2D提供动画，CollisionShape2D提供碰撞判断
+
 - 怪物、箱子、需要遵循物理规则的物品：RigidBody2D， 子节点同Area2D
+
+
+## demo
+### 如何支持角色操作
+
+
+
+### 如何支持角色移动
+- 
+
+
+### 如何做怪物生成
+

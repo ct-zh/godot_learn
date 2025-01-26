@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://8kbshnteos5o"]
+[gd_scene load_steps=12 format=3 uid="uid://8kbshnteos5o"]
 
 [ext_resource type="PackedScene" uid="uid://dn63p6508lgx" path="res://scene/player.tscn" id="1_xoaa6"]
 [ext_resource type="Script" path="res://scene/main.gd" id="1_ysgal"]
 [ext_resource type="PackedScene" uid="uid://dx0kd1ml6ewcy" path="res://scene/mob.tscn" id="2_8suts"]
+[ext_resource type="FontFile" uid="uid://bk8ibqwgnb1ki" path="res://asset/fonts/Montserrat-Medium.ttf" id="4_7cfbk"]
+[ext_resource type="Script" path="res://scene/score_label.gd" id="5_tfvun"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_axs4v"]
 size = Vector3(60, 2, 60)
@@ -23,6 +25,10 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="Theme" id="Theme_ywa73"]
+default_font = ExtResource("4_7cfbk")
+default_font_size = 23
+
 [node name="Main" type="Node"]
 script = ExtResource("1_ysgal")
 mob_sence = ExtResource("2_8suts")
@@ -40,8 +46,11 @@ shape = SubResource("BoxShape3D_axs4v")
 mesh = SubResource("BoxMesh_akt16")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.194303, 0.980942, 0, -0.980942, -0.194303, 0, 12.443, 0)
+transform = Transform3D(1, 0, 0, 0, 0.253522, 0.96733, 0, -0.96733, 0.253522, 0.122523, 9.50137, 7.4283)
+light_energy = 1.5
 shadow_enabled = true
+shadow_bias = 0.05
+sky_mode = 1
 
 [node name="Player" parent="." instance=ExtResource("1_xoaa6")]
 
@@ -49,7 +58,7 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.608844, 0.79329, 0, -0.79329, 0.608844, 0, 13.3608, 19.2568)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.974897, -0.222655, 0, 0.222655, 0.974897, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.974897, -0.222655, 0, 0.222655, 0.974897, 0.565567, 2.18629, -1.09444)
 projection = 1
 size = 19.0
 
@@ -78,11 +87,55 @@ mesh = SubResource("CylinderMesh_7bkjm")
 curve = SubResource("Curve3D_gpyyj")
 
 [node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
-transform = Transform3D(0.00362308, 0, -0.999993, 0, 1, 0, 0.999993, 0, 0.00362308, -14.286, 0, -13.0029)
+transform = Transform3D(0.00362486, 0, -0.999993, 0, 1, 0, 0.999993, 0, 0.00362486, -14.286, 0, -13.0029)
 
 [node name="MobTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ywa73")
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 38.0
+offset_right = 115.0
+offset_bottom = 61.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score: 0
+"
+script = ExtResource("5_tfvun")
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.282353)
+
+[node name="Label" type="Label" parent="UserInterface/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -107.0
+offset_top = -14.0
+offset_right = 107.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press Enter to retry"
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
