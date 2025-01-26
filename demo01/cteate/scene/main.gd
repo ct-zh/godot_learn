@@ -47,10 +47,11 @@ func _on_mob_timer_timeout() -> void:
 	direction += randf_range(-PI/4, PI/4)
 	mob.rotation = direction
 	
-	# 随机速度
+	# 创建一个 Vector2 类型的速度向量，x 分量在 150 到 250 之间随机生成，y 分量为 0。
 	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
+	# 然后，将这个速度向量根据怪物的方向进行旋转，并赋值给 mob 的 linear_velocity 属性，以设置怪物的移动速度。
 	mob.linear_velocity = velocity.rotated(direction)
-	
+
 	add_child(mob)
 
 
